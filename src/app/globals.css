@@ -1,26 +1,496 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
+/* ============================================================
+   Z CRAFT — DESIGN SYSTEM
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ── Base Palette ────────────────────────────── */
+  --color-base-black: #0B0B0C;
+  --color-base-ivory: #FAF7F2;
+  --color-base-dark: #111113;
+  --color-base-card: #161618;
+  --color-base-card-hover: #1C1C1F;
+  --color-base-border: #2A2A2E;
+  --color-base-muted: #8A8A8F;
+
+  /* ── Gold Accents ────────────────────────────── */
+  --color-gold: #C9A227;
+  --color-gold-light: #E8C874;
+  --color-gold-dark: #A68520;
+  --color-gold-muted: rgba(201, 162, 39, 0.15);
+
+  /* ── Jewel Tones ─────────────────────────────── */
+  --color-burgundy: #5B1A26;
+  --color-emerald: #0E3B2E;
+  --color-royal-blue: #0B2A5B;
+  --color-dusty-rose: #B58C8A;
+  --color-plum: #6B3A5D;
+  --color-teal: #2D5F5D;
+  --color-copper: #7B4F3A;
+
+  /* ── Functional ──────────────────────────────── */
+  --color-success: #25D366;
+  --color-error: #E53E3E;
+  --color-warning: #F6AD55;
+
+  /* ── Typography ──────────────────────────────── */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* ── Spacing ─────────────────────────────────── */
+  --section-padding: clamp(3rem, 8vw, 7rem);
+  --content-max-width: 1400px;
+  --content-padding: clamp(1rem, 4vw, 2rem);
+
+  /* ── Transitions ─────────────────────────────── */
+  --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-fast: 200ms var(--ease-luxury);
+  --transition-medium: 350ms var(--ease-luxury);
+  --transition-slow: 600ms var(--ease-luxury);
+
+  /* ── Z-Index Layers ──────────────────────────── */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-navbar: 500;
+  --z-modal: 1000;
+  --z-whatsapp: 900;
+  --z-toast: 1100;
 }
 
+/* ── Tailwind v4 Theme Integration ──────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-base-black);
+  --color-foreground: var(--color-base-ivory);
+  --color-gold: var(--color-gold);
+  --color-gold-light: var(--color-gold-light);
+  --color-gold-dark: var(--color-gold-dark);
+  --color-card: var(--color-base-card);
+  --color-card-hover: var(--color-base-card-hover);
+  --color-border: var(--color-base-border);
+  --color-muted: var(--color-base-muted);
+  --color-burgundy: var(--color-burgundy);
+  --color-emerald: var(--color-emerald);
+  --color-royal-blue: var(--color-royal-blue);
+  --color-dusty-rose: var(--color-dusty-rose);
+  --color-success: var(--color-success);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================================
+   GLOBAL BASE STYLES
+   ============================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-base-black);
+  color: var(--color-base-ivory);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Selection ─────────────────────────────────── */
+::selection {
+  background: var(--color-gold);
+  color: var(--color-base-black);
+}
+
+::-moz-selection {
+  background: var(--color-gold);
+  color: var(--color-base-black);
+}
+
+/* ── Scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-base-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-dark);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-base-ivory);
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+
+p {
+  color: rgba(250, 247, 242, 0.75);
+  line-height: 1.7;
+}
+
+a {
+  color: var(--color-gold);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-gold-light);
+}
+
+/* ============================================================
+   GOLD ACCENTS & DIVIDERS
+   ============================================================ */
+
+.gold-text {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 50%, var(--color-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-gold-dark) 20%,
+    var(--color-gold) 50%,
+    var(--color-gold-dark) 80%,
+    transparent 100%
+  );
+  border: none;
+  margin: 2rem 0;
+  opacity: 0.6;
+}
+
+.gold-divider-thick {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-gold-dark) 15%,
+    var(--color-gold-light) 50%,
+    var(--color-gold-dark) 85%,
+    transparent 100%
+  );
+  border: none;
+  margin: 3rem 0;
+}
+
+.gold-border {
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.gold-border-hover:hover {
+  border-color: rgba(201, 162, 39, 0.5);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  color: var(--color-base-black);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-medium);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: transparent;
+  color: var(--color-gold);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-gold);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+}
+
+.btn-outline:hover {
+  background: var(--color-gold);
+  color: var(--color-base-black);
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: #25D366;
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+}
+
+.btn-whatsapp:hover {
+  background: #20BA5A;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+}
+
+/* ============================================================
+   CARDS & CONTAINERS
+   ============================================================ */
+
+.card {
+  background: var(--color-base-card);
+  border: 1px solid var(--color-base-border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all var(--transition-medium);
+}
+
+.card:hover {
+  border-color: rgba(201, 162, 39, 0.3);
+  background: var(--color-base-card-hover);
+}
+
+.section {
+  padding: var(--section-padding) var(--content-padding);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.section-full {
+  padding: var(--section-padding) 0;
+}
+
+/* ============================================================
+   SKELETON SHIMMER LOADING
+   ============================================================ */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-base-card) 25%,
+    var(--color-base-card-hover) 50%,
+    var(--color-base-card) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   VELVET TEXTURE OVERLAY
+   ============================================================ */
+
+.velvet-overlay {
+  position: relative;
+}
+
+.velvet-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(91, 26, 38, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 30%, rgba(14, 59, 46, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 80%, rgba(11, 42, 91, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   RESPONSIVE UTILITIES
+   ============================================================ */
+
+.container-tight {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+.container-wide {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+/* Hide on mobile / desktop */
+@media (max-width: 767px) {
+  .hide-mobile { display: none !important; }
+}
+@media (min-width: 768px) {
+  .hide-desktop { display: none !important; }
+}
+
+/* ============================================================
+   IMAGE HOVER CROSSFADE (for product cards)
+   ============================================================ */
+
+.img-crossfade {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-crossfade .img-primary,
+.img-crossfade .img-secondary {
+  transition: opacity var(--transition-medium);
+}
+
+.img-crossfade .img-secondary {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.img-crossfade:hover .img-primary {
+  opacity: 0;
+}
+
+.img-crossfade:hover .img-secondary {
+  opacity: 1;
+}
+
+/* ============================================================
+   WHATSAPP FLOAT
+   ============================================================ */
+
+@keyframes whatsapp-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: var(--z-whatsapp);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-medium);
+  animation: whatsapp-glow 3s ease-in-out infinite;
+  animation-delay: 3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-float svg {
+  width: 28px;
+  height: 28px;
+  fill: white;
+}
+
+.whatsapp-label {
+  position: absolute;
+  right: 68px;
+  background: #25D366;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all var(--transition-medium);
+  pointer-events: none;
+}
+
+.whatsapp-float:hover .whatsapp-label {
+  opacity: 1;
+  transform: translateX(0);
 }
